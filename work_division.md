@@ -4,8 +4,8 @@
 | Name | UBID | Role |
 |------|------|------|
 | Harshvardhan Shinde | hdshinde | Task 1: Problem Statement |
-| Lorenzo Price | lorenzop | Task 1: Problem Statement (support) |
-| Qiang Wu | qiangwu2 | Tasks 2, 3, 4, 5: Data Sources, HDFS, Cleaning, EDA |
+| Lorenzo Price | lorenzop | Task 4: Data Cleaning |
+| Qiang Wu | qiangwu2 | Tasks 2, 3, 5: Data Sources, HDFS, EDA |
 
 ## Task Assignments
 
@@ -14,7 +14,7 @@
 | Task 1: Problem Statement | 20 pts | Harshvardhan Shinde | Completed |
 | Task 2: Data Sources | 15 pts | Qiang Wu | Completed |
 | Task 3: HDFS Utilization | 15 pts | Qiang Wu | Completed |
-| Task 4: Data Cleaning | 25 pts | Qiang Wu | Completed |
+| Task 4: Data Cleaning | 25 pts | Lorenzo Price | Completed |
 | Task 5: EDA | 25 pts | Qiang Wu | Completed |
 | Report Compilation | — | All Members | Completed |
 
