@@ -7524,6 +7524,7 @@ a.anchor-link {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="CSE-4/587-%E2%80%94-End-to-End-Big-Data-Pipeline">CSE 4/587 — End-to-End Big Data Pipeline<a class="anchor-link" href="#CSE-4/587-%E2%80%94-End-to-End-Big-Data-Pipeline">¶</a></h1><h1 id="Project-Phase-1-Report">Project Phase 1 Report<a class="anchor-link" href="#Project-Phase-1-Report">¶</a></h1><p><strong>Project Title:</strong> Stock Movement Prediction</p>
 <p><strong>Dataset:</strong> S&amp;P 500 Stock Prices (2014–2017)</p>
+<p><strong>GitHub Repository:</strong> <a href="https://github.com/QiangWu769/-cse587-phase1">https://github.com/QiangWu769/-cse587-phase1</a></p>
 <p><strong>Team Members:</strong></p>
 <table>
 <thead>
@@ -8140,13 +8141,7 @@ Stocks with missing values:
 278801     UA  2016-04-07   NaN    NaN    NaN
 308365    FTV  2016-07-01   NaN    NaN    NaN
 442107    BHF  2017-07-26   NaN    NaN    NaN
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>
+
 Rows before: 497,472 → Rows after: 497,461 (removed 11)
 </pre>
 </div>
@@ -8211,13 +8206,7 @@ low       float64
 close     float64
 volume      int64
 dtype: object
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>
+
 === After Type Conversion ===
 symbol            object
 date      datetime64[ns]
@@ -8230,7 +8219,13 @@ dtype: object
 
 Date range: 2014-01-02 to 2017-12-29
 Total trading days: 1007
-Unique symbols: 505
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Unique symbols: 505
 </pre>
 </div>
 </div>
@@ -8306,13 +8301,7 @@ Rows with non-positive prices: 0
 Anomalous rows found:
       symbol       date   open    high    low   close   volume
 45501    AOS 2014-05-19  23.89  23.595  23.85  24.445  1944854
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>
+
 Rows before: 497,461 → Rows after: 497,460 (removed 1)
 </pre>
 </div>
@@ -8439,7 +8428,13 @@ Rows after merge: 497,460 (unchanged from 497,460)
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>=== Sector Distribution After Merge ===
+<pre>=== Sector Distribution After Merge ===</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>
 </pre>
 </div>
 </div>
@@ -8751,13 +8746,7 @@ Shape: 497,460 rows × 16 columns
 Columns: ['symbol', 'date', 'open', 'high', 'low', 'close', 'volume', 'company_name', 'sector', 'sub_industry', 'daily_return', 'price_range', 'log_volume', 'day_of_week', 'year', 'month']
 Date range: 2014-01-02 to 2017-12-29
 Unique symbols: 505
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Sectors: 12
+Sectors: 12
 
 === Data Types ===
 symbol                  object
