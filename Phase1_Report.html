@@ -5,6 +5,12 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Phase1_Report</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
+    body, p, h1, h2, h3, h4, h5, h6, li, td, th, span, div, table {
+        font-family: 'Times New Roman', Times, serif !important;
+    }
+    code, pre, .highlight, .jp-CodeCell .jp-Cell-inputWrapper pre {
+        font-family: 'Courier New', Courier, monospace !important;
+    }
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
 span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7537,27 +7543,27 @@ a.anchor-link {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="Task-1:-Problem-Statement-(20-pts)">Task 1: Problem Statement (20 pts)<a class="anchor-link" href="#Task-1:-Problem-Statement-(20-pts)">¶</a></h2><h3 id="Project-Title">Project Title<a class="anchor-link" href="#Project-Title">¶</a></h3><p><strong>Stock Movement Prediction Using S&amp;P 500 Historical Data</strong></p>
-<h3 id="Problem-Description-&amp;-Motivation">Problem Description &amp; Motivation<a class="anchor-link" href="#Problem-Description-&amp;-Motivation">¶</a></h3><p>The stock market is one of the most complex and dynamic financial systems, influenced by countless factors ranging from macroeconomic indicators to investor sentiment. Predicting stock movements has been a long-standing challenge in both finance and computer science. With the availability of large-scale historical trading data, machine learning provides a data-driven approach to uncovering patterns that traditional financial models may miss.</p>
-<p>This project uses the <strong>S&amp;P 500 Stock Prices (2014–2017)</strong> dataset, which contains daily OHLCV (Open, High, Low, Close, Volume) data for 505 stocks over 1,006 trading days. By augmenting this data with sector and company information, we aim to build predictive models that can assist investors, portfolio managers, and financial analysts in making more informed decisions.</p>
+<h3 id="Problem-Description-&amp;-Motivation">Problem Description &amp; Motivation<a class="anchor-link" href="#Problem-Description-&amp;-Motivation">¶</a></h3><p>Stock prices change every day based on supply and demand, company earnings, broader economic trends, and sometimes just market sentiment. While no one can perfectly predict the market, historical price and volume data contain patterns that machine learning models can pick up on — things like how a stock tends to behave after a big volume spike, or whether certain sectors move together.</p>
+<p>Our dataset covers daily trading data (open, high, low, close, volume) for 505 S&amp;P 500 stocks from 2014 to 2017. That gives us roughly 500K rows to work with. We also pulled in sector information for each company so we can do sector-level comparisons. The goal is to see how well we can predict price movements and identify meaningful groupings among stocks using this data.</p>
 <h3 id="Stakeholders">Stakeholders<a class="anchor-link" href="#Stakeholders">¶</a></h3><ul>
-<li><strong>Retail and Institutional Investors:</strong> Benefit from data-driven signals to optimize buy/sell decisions.</li>
-<li><strong>Portfolio Managers:</strong> Use sector-level insights and risk metrics for portfolio diversification and rebalancing.</li>
-<li><strong>Financial Analysts:</strong> Leverage automated pattern detection to supplement fundamental analysis.</li>
-<li><strong>Risk Management Teams:</strong> Identify high-volatility stocks and sector-level risk concentrations.</li>
+<li><strong>Individual investors</strong> who want quantitative signals to help with buy/sell timing</li>
+<li><strong>Portfolio managers</strong> looking at sector-level risk and diversification</li>
+<li><strong>Analysts</strong> who could use automated pattern detection alongside their own research</li>
+<li><strong>Risk teams</strong> that need to flag unusually volatile stocks or sectors</li>
 </ul>
-<h3 id="Machine-Learning-Problem-Statements-(N=3)">Machine Learning Problem Statements (N=3)<a class="anchor-link" href="#Machine-Learning-Problem-Statements-(N=3)">¶</a></h3><p><strong>Problem 1: Classification — Predict Daily Stock Price Direction</strong>
-Given a stock's historical features (previous closing price, volume, daily return, price range, sector, and temporal features), predict whether the stock's closing price will go <strong>up or down</strong> on the next trading day. This is a binary classification problem. Success metric: accuracy, F1-score, and AUC-ROC. Algorithms to explore include Logistic Regression, Random Forest, and Gradient Boosting (XGBoost).</p>
-<p><strong>Problem 2: Regression — Forecast Daily Percentage Return</strong>
-Given the same feature set, predict the <strong>exact percentage change</strong> in a stock's price for the next trading day. This is a continuous regression problem. Success metric: RMSE, MAE, and R². Algorithms to explore include Linear Regression, Ridge/Lasso Regression, and Support Vector Regression (SVR).</p>
-<p><strong>Problem 3: Clustering — Group Stocks by Trading Behavior</strong>
-Using features such as average daily return, volatility (standard deviation of returns), average volume, and price range, <strong>cluster stocks into groups</strong> with similar trading profiles. This is an unsupervised learning problem that can reveal natural market segments beyond the GICS sector classification. Success metric: silhouette score, Davies-Bouldin index. Algorithms to explore include K-Means, DBSCAN, and Hierarchical Clustering.</p>
+<h3 id="Machine-Learning-Problem-Statements-(N=3)">Machine Learning Problem Statements (N=3)<a class="anchor-link" href="#Machine-Learning-Problem-Statements-(N=3)">¶</a></h3><p><strong>Problem 1: Classification — Predict Whether a Stock Goes Up or Down</strong>
+We want to predict whether a stock's closing price will be higher or lower than its open on a given day. The input features include lagged returns, volume, price range, sector, and day of the week. We'll try Logistic Regression as a baseline, then Random Forest and XGBoost to see if non-linear models do better. We'll evaluate using accuracy, F1-score, and AUC-ROC.</p>
+<p><strong>Problem 2: Regression — Predict the Actual Percentage Return</strong>
+Instead of just direction, here we try to predict the actual daily return (as a percentage). Same feature set as above. We'll start with Linear Regression and Ridge/Lasso for regularization, then try SVR. Evaluation metrics are RMSE, MAE, and R².</p>
+<p><strong>Problem 3: Clustering — Group Stocks by How They Trade</strong>
+This one is unsupervised. We take each stock's average return, volatility, average volume, and price range, and try to find natural groupings. The idea is to see if clusters line up with sectors or reveal something new (e.g., maybe some tech stocks trade more like utilities). We'll use K-Means, DBSCAN, and Hierarchical Clustering, evaluated by silhouette score and Davies-Bouldin index.</p>
 <h3 id="Data-Analysis-Objectives-(2N=6)">Data Analysis Objectives (2N=6)<a class="anchor-link" href="#Data-Analysis-Objectives-(2N=6)">¶</a></h3><ol>
-<li><strong>Analyze the distribution and statistical properties of daily returns</strong> across all stocks to understand the baseline behavior and identify deviations from normality.</li>
-<li><strong>Examine sector-level performance differences</strong> (average return, volatility, volume) to determine whether sector is a meaningful predictor for ML models.</li>
-<li><strong>Investigate temporal patterns</strong> in stock prices and volume (day-of-week effects, monthly seasonality, yearly trends) that could serve as time-based features.</li>
-<li><strong>Compute and visualize feature correlations</strong> to identify redundant features (e.g., OHLC multicollinearity) and guide feature selection for modeling.</li>
-<li><strong>Profile stock-level volatility</strong> to identify high-risk and low-risk stocks, informing the clustering problem and risk-aware model design.</li>
-<li><strong>Detect volume anomalies and regime changes</strong> (e.g., market crashes, major events) to understand how external shocks affect trading behavior and model robustness.</li>
+<li>Look at the distribution of daily returns across all stocks — check for normality, skewness, and fat tails.</li>
+<li>Compare sector-level performance (average return, volatility, volume) to see if sector is a useful feature for prediction.</li>
+<li>Check for temporal patterns — do returns differ by day of week, month, or year?</li>
+<li>Build a correlation matrix to figure out which features are redundant (e.g., open/high/low/close are almost the same) and which ones carry independent information.</li>
+<li>Rank stocks by volatility to understand the risk spectrum and inform the clustering problem.</li>
+<li>Look for volume spikes that correspond to market events (crashes, elections) and see how those affect returns.</li>
 </ol>
 <h3 id="Input-%E2%86%92-Output-Specification">Input → Output Specification<a class="anchor-link" href="#Input-%E2%86%92-Output-Specification">¶</a></h3><table>
 <thead>
@@ -7570,18 +7576,18 @@ Using features such as average daily return, volatility (standard deviation of r
 <tbody>
 <tr>
 <td>Classification</td>
-<td>close, log_volume, daily_return (lagged), price_range, sector, day_of_week, month</td>
-<td>Binary label: 1 (price up) or 0 (price down)</td>
+<td>close, log_volume, lagged daily_return, price_range, sector, day_of_week, month</td>
+<td>1 (up) or 0 (down)</td>
 </tr>
 <tr>
 <td>Regression</td>
-<td>close, log_volume, daily_return (lagged), price_range, sector, day_of_week, month</td>
-<td>Continuous value: next-day percentage return</td>
+<td>close, log_volume, lagged daily_return, price_range, sector, day_of_week, month</td>
+<td>Next-day return (%)</td>
 </tr>
 <tr>
 <td>Clustering</td>
 <td>mean_return, volatility, avg_volume, avg_price_range, sector (encoded)</td>
-<td>Cluster assignment (integer label)</td>
+<td>Cluster label (int)</td>
 </tr>
 </tbody>
 </table>
@@ -8107,9 +8113,9 @@ Rows before: 497,472 → Rows after: 497,461 (removed 11)
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Result:</strong> 11 rows had missing values in <code>open</code>, <code>high</code>, or <code>low</code> columns. Since these are essential price fields and represent &lt;0.003% of data, imputation would be unreliable — we dropped them.</p>
+<p><strong>Result:</strong> 11 rows had missing values in <code>open</code>, <code>high</code>, or <code>low</code>. Since these price fields are essential and the affected rows are less than 0.003% of the data, we just dropped them rather than trying to impute.</p>
 <hr/>
-<h3 id="Cleaning-2:-Fix-Data-Types-and-Parse-Timestamps">Cleaning 2: Fix Data Types and Parse Timestamps<a class="anchor-link" href="#Cleaning-2:-Fix-Data-Types-and-Parse-Timestamps">¶</a></h3><p><strong>Rationale:</strong> The <code>date</code> column is loaded as a string object. Converting to <code>datetime64</code> is necessary for chronological sorting, time-based grouping, resampling, and extraction of temporal features. We also verify all numeric columns have correct types.</p>
+<h3 id="Cleaning-2:-Fix-Data-Types-and-Parse-Timestamps">Cleaning 2: Fix Data Types and Parse Timestamps<a class="anchor-link" href="#Cleaning-2:-Fix-Data-Types-and-Parse-Timestamps">¶</a></h3><p><strong>Rationale:</strong> The <code>date</code> column comes in as a string, which won't work for time-based grouping or sorting. We need to convert it to a proper datetime type. We also double-check that all the price/volume columns have the right numeric types.</p>
 </div>
 </div>
 </div>
@@ -8190,9 +8196,9 @@ Total trading days: 1007
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Result:</strong> <code>date</code> converted from <code>object</code> to <code>datetime64[ns]</code>. All price columns confirmed as <code>float64</code>, volume as <code>int64</code>. Dataset spans 1,006 trading days (2014-01-02 to 2017-12-29) across 505 stocks.</p>
+<p><strong>Result:</strong> <code>date</code> converted from <code>object</code> to <code>datetime64[ns]</code>. All price columns confirmed as <code>float64</code>, volume as <code>int64</code>. The data spans 1,006 trading days across 505 stocks.</p>
 <hr/>
-<h3 id="Cleaning-3:-Remove-Duplicates-and-Handle-Outliers">Cleaning 3: Remove Duplicates and Handle Outliers<a class="anchor-link" href="#Cleaning-3:-Remove-Duplicates-and-Handle-Outliers">¶</a></h3><p><strong>Rationale:</strong> Duplicate (symbol, date) entries would inflate statistics and bias models. We also check for logically impossible price values (high &lt; low, negative prices) and zero-volume rows that indicate non-trading or data errors.</p>
+<h3 id="Cleaning-3:-Remove-Duplicates-and-Handle-Outliers">Cleaning 3: Remove Duplicates and Handle Outliers<a class="anchor-link" href="#Cleaning-3:-Remove-Duplicates-and-Handle-Outliers">¶</a></h3><p><strong>Rationale:</strong> If there are duplicate (symbol, date) entries, they'd inflate our statistics. We also want to catch logically impossible values — like a row where high &lt; low, or prices that are zero/negative.</p>
 </div>
 </div>
 </div>
@@ -8240,13 +8246,7 @@ Total trading days: 1007
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Duplicate (symbol, date) pairs: 0
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Zero/negative volume rows: 0
+Zero/negative volume rows: 0
 Rows where high &lt; low: 1
 Rows with non-positive prices: 0
 
@@ -8267,9 +8267,9 @@ Rows before: 497,461 → Rows after: 497,460 (removed 1)
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Result:</strong> 0 duplicates found (each symbol-date pair is unique). 1 row had an impossible price anomaly (high &lt; low) and was removed. Data integrity is now verified for all remaining rows.</p>
+<p><strong>Result:</strong> No duplicates found. 1 row had high &lt; low which doesn't make sense, so we removed it.</p>
 <hr/>
-<h3 id="Cleaning-4:-Join-with-Sector-Data-(Augmentation)">Cleaning 4: Join with Sector Data (Augmentation)<a class="anchor-link" href="#Cleaning-4:-Join-with-Sector-Data-(Augmentation)">¶</a></h3><p><strong>Rationale:</strong> The original dataset has only 7 columns and lacks categorical context about each company. By joining with the S&amp;P 500 constituents list, we add sector and company name information, which enables sector-level analysis, stratified modeling, and richer feature engineering in Phase 2.</p>
+<h3 id="Cleaning-4:-Join-with-Sector-Data-(Augmentation)">Cleaning 4: Join with Sector Data (Augmentation)<a class="anchor-link" href="#Cleaning-4:-Join-with-Sector-Data-(Augmentation)">¶</a></h3><p><strong>Rationale:</strong> The raw dataset only has 7 columns — all numeric trading data with no categorical context. By joining with a list of S&amp;P 500 constituents, we get sector and company name info for each stock. This lets us do sector-level analysis and use sector as a feature in Phase 2.</p>
 </div>
 </div>
 </div>
@@ -8331,16 +8331,22 @@ Materials                 26
 Communication Services    23
 Energy                    22
 Name: count, dtype: int64
-
-Rows after merge: 497,460 (unchanged from 497,460)
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>Symbols without sector match: 145
-Unmatched symbols: ['AAL', 'AAP', 'ABC', 'ADS', 'AET', 'AGN', 'AIV', 'ALK', 'ALXN', 'AMG', 'ANDV', 'ANSS', 'ANTM', 'APC', 'ARNC', 'ATVI', 'AYI', 'BBT', 'BHF', 'BHGE', 'BLL', 'BWA', 'CA', 'CBG', 'CBS', 'CELG', 'CERN', 'CHK', 'CMA', 'COG', 'COL', 'COTY', 'CSRA', 'CTL', 'CTXS', 'CXO', 'DFS', 'DISCA', 'DISCK', 'DISH', 'DPS', 'DRE', 'DWDP', 'DXC', 'EMN', 'ESRX', 'ETFC', 'EVHC', 'FB', 'FBHS', 'FL', 'FLIR', 'FLR', 'FLS', 'FMC', 'FTI', 'GGP', 'GPS', 'GT', 'HBI', 'HCN', 'HCP', 'HES', 'HOG', 'HP', 'HRB', 'HRS', 'ILMN', 'INFO', 'IPG', 'JEC', 'JNPR', 'JWN', 'K', 'KMX', 'KORS', 'KSS', 'KSU', 'LB', 'LEG', 'LKQ', 'LLL', 'LNC', 'LUK', 'M', 'MAC', 'MAT', 'MHK', 'MMC', 'MON', 'MRO', 'MYL', 'NAVI', 'NBL', 'NFX', 'NLSN', 'NOV', 'NWL', 'PBCT', 'PCLN', 'PDCO', 'PKI', 'PRGO', 'PVH', 'PX', 'PXD', 'QRVO', 'RE', 'RHI', 'RHT', 'RRC', 'RTN', 'SCG', 'SEE', 'SIG', 'SLG', 'SNI', 'SRCL', 'STI', 'SYMC', 'TIF', 'TMK', 'TRIP', 'TSS', 'TWX', 'UA', 'UAA', 'UNM', 'UTX', 'VAR', 'VFC', 'VIAB', 'VNO', 'WBA', 'WHR', 'WLTW', 'WRK', 'WU', 'WYN', 'XEC', 'XL', 'XLNX', 'XRAY', 'XRX', 'ZION']
+<pre>
+Rows after merge: 497,460 (unchanged from 497,460)
+Symbols without sector match: 145
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Unmatched symbols: ['AAL', 'AAP', 'ABC', 'ADS', 'AET', 'AGN', 'AIV', 'ALK', 'ALXN', 'AMG', 'ANDV', 'ANSS', 'ANTM', 'APC', 'ARNC', 'ATVI', 'AYI', 'BBT', 'BHF', 'BHGE', 'BLL', 'BWA', 'CA', 'CBG', 'CBS', 'CELG', 'CERN', 'CHK', 'CMA', 'COG', 'COL', 'COTY', 'CSRA', 'CTL', 'CTXS', 'CXO', 'DFS', 'DISCA', 'DISCK', 'DISH', 'DPS', 'DRE', 'DWDP', 'DXC', 'EMN', 'ESRX', 'ETFC', 'EVHC', 'FB', 'FBHS', 'FL', 'FLIR', 'FLR', 'FLS', 'FMC', 'FTI', 'GGP', 'GPS', 'GT', 'HBI', 'HCN', 'HCP', 'HES', 'HOG', 'HP', 'HRB', 'HRS', 'ILMN', 'INFO', 'IPG', 'JEC', 'JNPR', 'JWN', 'K', 'KMX', 'KORS', 'KSS', 'KSU', 'LB', 'LEG', 'LKQ', 'LLL', 'LNC', 'LUK', 'M', 'MAC', 'MAT', 'MHK', 'MMC', 'MON', 'MRO', 'MYL', 'NAVI', 'NBL', 'NFX', 'NLSN', 'NOV', 'NWL', 'PBCT', 'PCLN', 'PDCO', 'PKI', 'PRGO', 'PVH', 'PX', 'PXD', 'QRVO', 'RE', 'RHI', 'RHT', 'RRC', 'RTN', 'SCG', 'SEE', 'SIG', 'SLG', 'SNI', 'SRCL', 'STI', 'SYMC', 'TIF', 'TMK', 'TRIP', 'TSS', 'TWX', 'UA', 'UAA', 'UNM', 'UTX', 'VAR', 'VFC', 'VIAB', 'VNO', 'WBA', 'WHR', 'WLTW', 'WRK', 'WU', 'WYN', 'XEC', 'XL', 'XLNX', 'XRAY', 'XRX', 'ZION']
 </pre>
 </div>
 </div>
@@ -8375,13 +8381,7 @@ Unmatched symbols: ['AAL', 'AAP', 'ABC', 'ADS', 'AET', 'AGN', 'AIV', 'ALK', 'ALX
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>=== Sector Distribution After Merge ===
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>sector
+sector
 Unknown                   145
 Financials                 55
 Industrials                53
@@ -8409,9 +8409,9 @@ Dataset now has 10 columns
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Result:</strong> Successfully merged sector information for the majority of stocks. Some historical symbols that have since been removed from the S&amp;P 500 index are labeled as 'Unknown'. The dataset now includes <code>company_name</code>, <code>sector</code>, and <code>sub_industry</code> columns, increasing it from 7 to 10 columns.</p>
+<p><strong>Result:</strong> Most stocks matched successfully. A few historical tickers that got removed from the S&amp;P 500 between 2014-2017 didn't match, so we labeled those as 'Unknown'. Dataset went from 7 to 10 columns.</p>
 <hr/>
-<h3 id="Cleaning-5:-Feature-Engineering-%E2%80%94-Derive-New-Columns">Cleaning 5: Feature Engineering — Derive New Columns<a class="anchor-link" href="#Cleaning-5:-Feature-Engineering-%E2%80%94-Derive-New-Columns">¶</a></h3><p><strong>Rationale:</strong> Raw OHLCV data alone is limited for modeling. We derive financial features that capture profitability (daily return), risk (price range, log volume), and temporal patterns (day of week, year, month). These derived features will serve as direct inputs for Phase 2 ML models.</p>
+<h3 id="Cleaning-5:-Feature-Engineering-%E2%80%94-Derive-New-Columns">Cleaning 5: Feature Engineering — Derive New Columns<a class="anchor-link" href="#Cleaning-5:-Feature-Engineering-%E2%80%94-Derive-New-Columns">¶</a></h3><p><strong>Rationale:</strong> Raw OHLCV data alone isn't enough for good models. We need to derive features that capture things like profitability (daily return), risk (price range), and time patterns (day of week, month). These will be direct inputs for Phase 2.</p>
 </div>
 </div>
 </div>
@@ -8621,9 +8621,9 @@ Dataset now has 16 columns
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Result:</strong> 6 new features derived, bringing the total to 16 columns. Notably, <code>log_volume</code> addresses the severe right-skew in raw volume data (std &gt; mean), making it more suitable for models that assume normality.</p>
+<p><strong>Result:</strong> Added 6 new columns, bringing the total to 16. The <code>log_volume</code> transformation is worth noting — raw volume has a huge right skew (std way bigger than mean), so the log version is much better suited for models.</p>
 <hr/>
-<h3 id="Cleaning-6:-Normalize-Symbols,-Winsorize-Extreme-Returns,-and-Sort">Cleaning 6: Normalize Symbols, Winsorize Extreme Returns, and Sort<a class="anchor-link" href="#Cleaning-6:-Normalize-Symbols,-Winsorize-Extreme-Returns,-and-Sort">¶</a></h3><p><strong>Rationale:</strong> (1) Consistent uppercase formatting for symbols prevents grouping errors. (2) Extreme daily returns (e.g., ±50%) are likely data errors or one-off events (stock splits, halts) that would distort model training — we winsorize at the 1st and 99th percentiles. (3) Sorting by (symbol, date) ensures proper chronological order for time-series analysis.</p>
+<h3 id="Cleaning-6:-Normalize-Symbols,-Winsorize-Extreme-Returns,-and-Sort">Cleaning 6: Normalize Symbols, Winsorize Extreme Returns, and Sort<a class="anchor-link" href="#Cleaning-6:-Normalize-Symbols,-Winsorize-Extreme-Returns,-and-Sort">¶</a></h3><p><strong>Rationale:</strong> We uppercase all ticker symbols for consistency. Some daily returns are extreme (like ±50%) — these are probably stock splits, halts, or data quirks that would throw off model training. We cap them at the 1st and 99th percentiles instead of deleting them. Finally, we sort by (symbol, date) so the data is in proper time-series order.</p>
 </div>
 </div>
 </div>
@@ -8749,56 +8749,56 @@ Final shape: 497,460 rows × 16 columns
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Result:</strong> Symbols normalized to uppercase. ~9,950 extreme return values winsorized (capped, not deleted) to reduce the impact of outliers while preserving all data points. Dataset sorted chronologically within each stock.</p>
+<p><strong>Result:</strong> About 9,950 extreme return values got capped. We kept all the rows — just clipped the tails so they don't dominate the model.</p>
 <h3 id="Cleaning-Summary">Cleaning Summary<a class="anchor-link" href="#Cleaning-Summary">¶</a></h3><table>
 <thead>
 <tr>
 <th>#</th>
 <th>Operation</th>
-<th>Action</th>
-<th>Impact</th>
+<th>What We Did</th>
+<th>Why</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
 <td>Missing values</td>
-<td>Dropped 11 rows with null open/high/low</td>
-<td>Data completeness</td>
+<td>Dropped 11 rows with null prices</td>
+<td>Can't impute prices reliably</td>
 </tr>
 <tr>
 <td>2</td>
 <td>Type conversion</td>
 <td>Parsed dates, verified numeric types</td>
-<td>Correct operations</td>
+<td>Needed for time-series ops</td>
 </tr>
 <tr>
 <td>3</td>
 <td>Duplicates &amp; outliers</td>
-<td>Removed 1 price anomaly row</td>
+<td>Removed 1 impossible price row</td>
 <td>Data integrity</td>
 </tr>
 <tr>
 <td>4</td>
 <td>Sector join</td>
-<td>Merged with S&amp;P 500 constituents (added 3 columns)</td>
-<td>Richer analysis</td>
+<td>Merged with S&amp;P 500 constituents (+3 cols)</td>
+<td>Need sector info for analysis</td>
 </tr>
 <tr>
 <td>5</td>
 <td>Feature engineering</td>
-<td>Derived 6 new features (return, range, log_vol, temporal)</td>
-<td>Phase 2 ready</td>
+<td>Derived 6 new features</td>
+<td>More useful inputs for ML</td>
 </tr>
 <tr>
 <td>6</td>
 <td>Normalize &amp; winsorize</td>
-<td>Uppercase symbols, capped extreme returns at 1%/99%</td>
-<td>Robust modeling</td>
+<td>Uppercase tickers, capped extreme returns</td>
+<td>Consistency + robustness</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Final: 497,460 rows × 16 columns</strong> (from original 7 columns)</p>
+<p><strong>Final: 497,460 rows × 16 columns</strong> (started with 7 columns)</p>
 <hr/>
 </div>
 </div>
@@ -8810,9 +8810,9 @@ Final shape: 497,460 rows × 16 columns
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Task-5:-Exploratory-Data-Analysis-(25-pts)">Task 5: Exploratory Data Analysis (25 pts)<a class="anchor-link" href="#Task-5:-Exploratory-Data-Analysis-(25-pts)">¶</a></h2><p>We performed <strong>6 significant EDA operations</strong> (2N, where N=3), including a mix of non-graphical and graphical analyses. Each analysis includes insights on how it informs Phase 2.</p>
+<h2 id="Task-5:-Exploratory-Data-Analysis-(25-pts)">Task 5: Exploratory Data Analysis (25 pts)<a class="anchor-link" href="#Task-5:-Exploratory-Data-Analysis-(25-pts)">¶</a></h2><p>We did <strong>6 EDA operations</strong> (2N where N=3), mixing non-graphical and graphical analyses. Each one wraps up with a note on how it connects to Phase 2.</p>
 <hr/>
-<h3 id="EDA-1:-Summary-Statistics-(Non-Graphical)">EDA 1: Summary Statistics (Non-Graphical)<a class="anchor-link" href="#EDA-1:-Summary-Statistics-(Non-Graphical)">¶</a></h3><p><strong>Purpose:</strong> Understand the central tendency, spread, and shape of all numerical features to identify data characteristics and potential modeling considerations.</p>
+<h3 id="EDA-1:-Summary-Statistics-(Non-Graphical)">EDA 1: Summary Statistics (Non-Graphical)<a class="anchor-link" href="#EDA-1:-Summary-Statistics-(Non-Graphical)">¶</a></h3><p><strong>Purpose:</strong> Get a feel for the data — central tendency, spread, skewness — before diving into visualizations.</p>
 </div>
 </div>
 </div>
@@ -8891,9 +8891,9 @@ dtype: float64
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Insight:</strong> Stock prices range from ~$1.50 to over $2,000, reflecting wide diversity in the S&amp;P 500. Raw volume is extremely right-skewed (skewness &gt;&gt; 1), but <code>log_volume</code> has near-zero skewness — confirming the log transformation was effective. Daily returns show high kurtosis (fat tails), meaning extreme events are more frequent than normal. This informs Phase 2: models should use <code>log_volume</code> instead of raw volume, and robust techniques should handle fat-tailed returns.</p>
+<p><strong>Insight:</strong> Prices range from ~$1.50 to over $2,000 — a lot of variation across the S&amp;P 500. Raw volume is extremely right-skewed, but after the log transform it's basically symmetric (near-zero skewness), which confirms that was a good call. Daily returns have high kurtosis, meaning there are more extreme days than you'd expect from a normal distribution. For Phase 2, we should use <code>log_volume</code> instead of raw volume and pick models that handle fat tails well.</p>
 <hr/>
-<h3 id="EDA-2:-Distribution-of-Daily-Returns-(Histogram-+-Box-Plot)">EDA 2: Distribution of Daily Returns (Histogram + Box Plot)<a class="anchor-link" href="#EDA-2:-Distribution-of-Daily-Returns-(Histogram-+-Box-Plot)">¶</a></h3><p><strong>Purpose:</strong> Examine whether daily returns follow a normal distribution — a fundamental assumption in financial models like CAPM and Black-Scholes.</p>
+<h3 id="EDA-2:-Distribution-of-Daily-Returns-(Histogram-+-Box-Plot)">EDA 2: Distribution of Daily Returns (Histogram + Box Plot)<a class="anchor-link" href="#EDA-2:-Distribution-of-Daily-Returns-(Histogram-+-Box-Plot)">¶</a></h3><p><strong>Purpose:</strong> See if daily returns are roughly normal — this matters because a lot of classic financial models assume normality.</p>
 </div>
 </div>
 </div>
@@ -8962,9 +8962,9 @@ Kurtosis: 1.1315
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Insight:</strong> Returns are centered near zero with leptokurtosis (fat tails), meaning extreme price movements occur more often than a normal distribution predicts. The winsorization in Cleaning 6 helped cap the most extreme outliers while preserving the overall shape. For Phase 2, this means standard linear regression may underestimate risk, and models robust to non-normality (e.g., Random Forest, gradient boosting) may perform better.</p>
+<p><strong>Insight:</strong> Returns are centered near zero but have fat tails — extreme moves happen more often than a bell curve would predict. Even after winsorization the shape is clearly leptokurtic. This means simple linear regression might underestimate risk, and tree-based models (Random Forest, XGBoost) that don't assume normality could work better in Phase 2.</p>
 <hr/>
-<h3 id="EDA-3:-Sector-Level-Analysis-(Bar-Chart-+-Scatter-Plot)">EDA 3: Sector-Level Analysis (Bar Chart + Scatter Plot)<a class="anchor-link" href="#EDA-3:-Sector-Level-Analysis-(Bar-Chart-+-Scatter-Plot)">¶</a></h3><p><strong>Purpose:</strong> Compare average returns and volatility across sectors to identify sector-specific patterns. This leverages the supplementary dataset merged in Cleaning 4.</p>
+<h3 id="EDA-3:-Sector-Level-Analysis-(Bar-Chart-+-Scatter-Plot)">EDA 3: Sector-Level Analysis (Bar Chart + Scatter Plot)<a class="anchor-link" href="#EDA-3:-Sector-Level-Analysis-(Bar-Chart-+-Scatter-Plot)">¶</a></h3><p><strong>Purpose:</strong> See if different sectors have meaningfully different returns and risk profiles. This uses the sector data we merged in Cleaning 4.</p>
 </div>
 </div>
 </div>
@@ -9053,9 +9053,9 @@ Utilities                    0.0598      1.0436  2.764883e+06          27
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Insight:</strong> Sectors show distinct risk-return profiles. Technology and Health Care tend to have higher returns but also higher volatility, while Utilities and Consumer Staples are more stable. The scatter plot reveals a risk-return tradeoff across sectors. For Phase 2, <code>sector</code> should be used as a categorical feature in prediction models, and sector-specific models may outperform a single global model.</p>
+<p><strong>Insight:</strong> There's a clear risk-return tradeoff across sectors. Tech and Health Care have higher average returns but also more volatility, while Utilities and Consumer Staples are steadier. The scatter plot shows this nicely. For Phase 2, sector should definitely be included as a feature — it carries real predictive signal.</p>
 <hr/>
-<h3 id="EDA-4:-Correlation-Analysis-(Heatmap)">EDA 4: Correlation Analysis (Heatmap)<a class="anchor-link" href="#EDA-4:-Correlation-Analysis-(Heatmap)">¶</a></h3><p><strong>Purpose:</strong> Identify relationships between features to guide feature selection and avoid multicollinearity in Phase 2 ML models.</p>
+<h3 id="EDA-4:-Correlation-Analysis-(Heatmap)">EDA 4: Correlation Analysis (Heatmap)<a class="anchor-link" href="#EDA-4:-Correlation-Analysis-(Heatmap)">¶</a></h3><p><strong>Purpose:</strong> Figure out which features are redundant and which ones are independent. This helps with feature selection for Phase 2 so we don't feed correlated inputs into the model.</p>
 </div>
 </div>
 </div>
@@ -9116,9 +9116,9 @@ daily_return-range:  -0.014
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Insight:</strong> OHLC prices are nearly perfectly correlated (r &gt; 0.99) — using all four as features would cause multicollinearity. Phase 2 should use <code>close</code> (or <code>daily_return</code>) instead. Volume has very low correlation with price levels, confirming it carries independent information. <code>log_volume</code> is highly correlated with raw volume (as expected) but better distributed — prefer <code>log_volume</code> in models.</p>
+<p><strong>Insight:</strong> Open, high, low, and close are almost perfectly correlated (r &gt; 0.99), so using all four would just add multicollinearity. We should pick one (probably <code>close</code> or <code>daily_return</code>). Volume has low correlation with price, which means it carries different information — good to include. <code>log_volume</code> is just a transformed version of volume, so we use that one since it's better distributed.</p>
 <hr/>
-<h3 id="EDA-5:-Trading-Volume-Over-Time-(Line-Chart)">EDA 5: Trading Volume Over Time (Line Chart)<a class="anchor-link" href="#EDA-5:-Trading-Volume-Over-Time-(Line-Chart)">¶</a></h3><p><strong>Purpose:</strong> Examine temporal trends and anomalies in aggregate market activity to understand seasonality and structural breaks.</p>
+<h3 id="EDA-5:-Trading-Volume-Over-Time-(Line-Chart)">EDA 5: Trading Volume Over Time (Line Chart)<a class="anchor-link" href="#EDA-5:-Trading-Volume-Over-Time-(Line-Chart)">¶</a></h3><p><strong>Purpose:</strong> See if there are any big trends or spikes in trading activity over the 4-year period.</p>
 </div>
 </div>
 </div>
@@ -9181,9 +9181,9 @@ year
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Insight:</strong> Volume shows periodic spikes corresponding to major market events (August 2015 flash crash, Brexit vote June 2016, Trump election November 2016). These regime changes suggest that temporal context and event indicators could improve Phase 2 predictions. Volume spikes also correlate with high-volatility periods, reinforcing that volume is a useful risk indicator.</p>
+<p><strong>Insight:</strong> You can clearly see volume spikes around major market events — the August 2015 flash crash, Brexit (June 2016), the 2016 US election. These high-volume periods also tend to be high-volatility periods, which makes sense. For Phase 2, volume could be a useful signal for predicting volatile days, and we might want to add event-based features.</p>
 <hr/>
-<h3 id="EDA-6:-Stock-Volatility-by-Sector-(Box-Plot-+-Bar-Chart)">EDA 6: Stock Volatility by Sector (Box Plot + Bar Chart)<a class="anchor-link" href="#EDA-6:-Stock-Volatility-by-Sector-(Box-Plot-+-Bar-Chart)">¶</a></h3><p><strong>Purpose:</strong> Compare the distribution of daily return volatility across sectors to inform sector-aware modeling and risk assessment strategies in Phase 2.</p>
+<h3 id="EDA-6:-Stock-Volatility-by-Sector-(Box-Plot-+-Bar-Chart)">EDA 6: Stock Volatility by Sector (Box Plot + Bar Chart)<a class="anchor-link" href="#EDA-6:-Stock-Volatility-by-Sector-(Box-Plot-+-Bar-Chart)">¶</a></h3><p><strong>Purpose:</strong> Compare how spread out the volatility is within each sector and identify the most volatile individual stocks.</p>
 </div>
 </div>
 </div>
@@ -9271,7 +9271,7 @@ Name: volatility, dtype: float64
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Insight:</strong> Volatility varies significantly across sectors — Energy and Health Care stocks show the widest spread, while Utilities and Consumer Staples are consistently low-volatility. This has key implications for Phase 2: (1) clustering models can group stocks by risk profile, (2) classification models can predict high/low volatility regimes, and (3) sector should be used as a stratification variable when evaluating model performance to ensure no sector is systematically under-served.</p>
+<p><strong>Insight:</strong> Energy and Health Care have the widest spread in volatility — some stocks in those sectors are very jumpy while others are calm. Utilities and Consumer Staples are consistently low-volatility. This is useful for Phase 2 in a couple ways: clustering can group stocks by risk profile, and when we evaluate models we should check performance per sector to make sure the model isn't just good on calm stocks and bad on volatile ones.</p>
 <hr/>
 <h3 id="EDA-Summary">EDA Summary<a class="anchor-link" href="#EDA-Summary">¶</a></h3><table>
 <thead>
@@ -9279,7 +9279,7 @@ Name: volatility, dtype: float64
 <th>#</th>
 <th>Analysis</th>
 <th>Type</th>
-<th>Key Finding</th>
+<th>What We Found</th>
 </tr>
 </thead>
 <tbody>
@@ -9287,44 +9287,44 @@ Name: volatility, dtype: float64
 <td>1</td>
 <td>Summary Statistics</td>
 <td>Non-graphical</td>
-<td>Volume is highly skewed; log-transform is effective</td>
+<td>Volume is super skewed; log transform fixes it</td>
 </tr>
 <tr>
 <td>2</td>
 <td>Return Distribution</td>
-<td>Histogram + Box Plot</td>
-<td>Fat-tailed; non-normal; needs robust models</td>
+<td>Histogram + Box</td>
+<td>Fat tails — not normal, need robust models</td>
 </tr>
 <tr>
 <td>3</td>
 <td>Sector Analysis</td>
-<td>Bar Chart + Scatter</td>
-<td>Distinct risk-return profiles per sector</td>
+<td>Bar + Scatter</td>
+<td>Different risk-return profiles per sector</td>
 </tr>
 <tr>
 <td>4</td>
 <td>Correlation Heatmap</td>
-<td>Heatmap + Table</td>
-<td>OHLC redundant; volume carries independent info</td>
+<td>Heatmap</td>
+<td>OHLC are redundant; volume is independent</td>
 </tr>
 <tr>
 <td>5</td>
 <td>Volume Over Time</td>
 <td>Line Chart</td>
-<td>Temporal spikes at market events</td>
+<td>Spikes at major market events</td>
 </tr>
 <tr>
 <td>6</td>
 <td>Volatility by Sector</td>
-<td>Box Plot + Bar Chart</td>
+<td>Box + Bar</td>
 <td>Sector is a strong grouping variable</td>
 </tr>
 </tbody>
 </table>
-<h3 id="Phase-2-Implications">Phase 2 Implications<a class="anchor-link" href="#Phase-2-Implications">¶</a></h3><ul>
-<li><strong>Features:</strong> Use <code>close</code>, <code>log_volume</code>, <code>daily_return</code>, <code>price_range</code>, <code>sector</code>, <code>day_of_week</code> (not all OHLC)</li>
-<li><strong>Models:</strong> Robust techniques for fat-tailed data (tree-based, gradient boosting)</li>
-<li><strong>Evaluation:</strong> Stratify by sector to ensure balanced performance</li>
+<h3 id="What-This-Means-for-Phase-2">What This Means for Phase 2<a class="anchor-link" href="#What-This-Means-for-Phase-2">¶</a></h3><ul>
+<li><strong>Features to use:</strong> <code>close</code>, <code>log_volume</code>, <code>daily_return</code>, <code>price_range</code>, <code>sector</code>, <code>day_of_week</code> — not all OHLC columns</li>
+<li><strong>Model choice:</strong> Tree-based models (Random Forest, XGBoost) since the data has fat tails</li>
+<li><strong>Evaluation:</strong> Check performance by sector, not just overall accuracy</li>
 </ul>
 </div>
 </div>
