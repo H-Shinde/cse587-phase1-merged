@@ -1,4 +1,4 @@
-# Work Division — CSE 4/587 Phase 1
+# Work Division — CSE 587 Phase 1
 
 ## Team Members
 | Name | UBID | Role |
@@ -16,6 +16,22 @@
 | Task 3: HDFS Utilization | 15 pts | Qiang Wu | Completed |
 | Task 4: Data Cleaning | 25 pts | Lorenzo Price | Completed |
 | Task 5: EDA | 25 pts | Qiang Wu | Completed |
+| Report Compilation | — | All Members | Completed |
+
+# Work Division — CSE 587 Phase 2
+| Name | UBID | Role |
+|------|------|------|
+| Harshvardhan Shinde | hdshinde | Task 2: Data Analysis Objectives |
+| Lorenzo Price | lorenzop | Task 4: Data Cleaning |
+| Qiang Wu | qiangwu2 | Tasks 2, 3, 5: Data Sources, HDFS, EDA |
+
+## Task Assignments
+
+| Task | Points | Assigned To | Status |
+|------|--------|-------------|--------|
+| Task 1: Spark ML | 50 pts | Lorenzo Price | Completed |
+| Task 2: Data Analysis Objectives | 30 pts | Harshvardhan Shinde | Completed |
+| Task 3: Presentation/Demonstration | 20 pts | All Members | Completed |
 | Report Compilation | — | All Members | Completed |
 
 ## Acknowledgment
