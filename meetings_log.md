@@ -42,6 +42,14 @@
   - Qiang Wu: Generate final PDF, compile zip, submit on UBLearns
   - All: Review final submission before upload
 
+## Meeting 4 - April 10, 2026 (Discord, 7:00 PM)
+- **Attendees:** Harshvardhan Shinde, Lorenzo Price, Qiang Wu
+- **Duration:** ~15 min
+- **Discussion:**
+  - Lorenzo presented finished Task 1 of phase 2: 3 machine learning algorithms done, Classification, Clustering, Regression
+  - Harsh presented plan for Data analysis: 6 analyses with plots
+  - Qian presented format for phase 2 report
+  - EveryonepPlanned Final presentation and presented ideas
 ## Notes
 - All communication was done through Discord group chat
 - No members were absent from any meeting

@@ -30,6 +30,8 @@ This project builds an end-to-end big data pipeline using Hadoop and Spark to an
 | Task 3 | HDFS Utilization (raw + cleaned data) | 15 pts |
 | Task 4 | Data Cleaning (6 operations) | 25 pts |
 | Task 5 | Exploratory Data Analysis (6 EDA operations) | 25 pts |
+| Task 6 | Spark ML (3 Machine Learning Algorithms ) | 50 pts |
+| Task 7 | Data Analysis (6 Objectives) | 30 pts |
 
 ### How to Reproduce
 
