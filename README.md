@@ -32,6 +32,7 @@ This project builds an end-to-end big data pipeline using Hadoop and Spark to an
 | Task 5 | Exploratory Data Analysis (6 EDA operations) | 25 pts |
 | Task 6 | Spark ML (3 Machine Learning Algorithms ) | 50 pts |
 | Task 7 | Data Analysis (6 Objectives) | 30 pts |
+| Task 8 | Presentation | 20 pts |
 
 ### How to Reproduce
 
